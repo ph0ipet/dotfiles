@@ -2,8 +2,6 @@
 
 ln -sf "$PWD/.vim" "$HOME"
 ln -sf "$PWD/.tmux.conf" "$HOME"
-ln -sf "$PWD/.gitconfig" "$HOME"
-ln -sf "$PWD/.gitignore" "$HOME"
 ln -sf "$PWD/.vimrc" "$HOME"
 ln -sf "$PWD/.zshrc" "$HOME"
 ln -sf "$PWD/.p10k.zsh" "$HOME"
