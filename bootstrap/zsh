@@ -1,0 +1,23 @@
+#!/bin/zsh
+
+# Assumes default ZSH installation
+ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
+
+# Installs plugins
+custom_plugins=(
+    "zsh-autosuggestions"
+    "zsh-syntax-highlighting"
+)
+
+for plugin in "${custom_plugins[@]}"
+do
+    if [ ! -d "$ZSH_CUSTOM/plugins/$plugin" ]; then
+        git clone https://github.com/zsh-users/$plugin ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/$plugin
+    fi
+done
+
+# Installs Powerlevel10k theme
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+
+# Fix permissions
+chmod 700 ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
