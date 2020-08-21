@@ -1,0 +1,132 @@
+#!/usr/bin/env bash
+
+# Make sure we’re using the latest Homebrew.
+brew update
+
+# Upgrade any already-installed formulae.
+brew upgrade
+
+# Save Homebrew’s installed location.
+BREW_PREFIX=$(brew --prefix)
+
+# Install GNU core utilities
+brew install coreutils
+brew install moreutils
+brew install findutils
+brew install gnu-sed
+brew install gnu-tar gawk gnutls gnu-indent gnu-getopt
+
+ln -s "${BREW_PREFIX}/bin/gsha256sum" "${BREW_PREFIX}/bin/sha256sum"
+ln -s "${BREW_PREFIX}/bin/greadlink" "${BREW_PREFIX}/bin/readlink"
+ln -s "${BREW_PREFIX}/bin/gtar" "${BREW_PREFIX}/bin/tar"
+
+brew install wget --with-iri
+brew install vim --with-override-system-vi
+
+brew_packages=(
+    "asdf"
+    "autoconf"
+    "automake"
+    "bat"    
+    "conftest"
+    "coreutils"
+    "cscope"
+    "ctags"
+    "elixir"
+    "erlang"
+    "exa"
+    "fish"
+    "fzf"
+    "gdbm"
+    "gettext"
+    "git"
+    "go"
+    "icu4c"
+    "jpeg"
+    "jq"
+    "jsonnet"
+    "kotlin"
+    "kubernetes-cli"
+    "libevent"
+    "libidn2"
+    "libpng"
+    "libssh"
+    "libtermkey"
+    "libtiff"
+    "libtool"
+    "libunistring"
+    "libuv"
+    "libvterm"
+    "libyaml"
+    "lua"
+    "luajit"
+    "macvim"
+    "mongodb-community-shell"
+    "msgpack"
+    "ncurses"
+    "neovim"
+    "node"
+    "oniguruma"
+    "openssl@1.1"
+    "pcre"
+    "pcre2"
+    "powerlevel10k"
+    "pre-commit"
+    "python@3.8"
+    "readline"
+    "reattach-to-user-namespace"
+    "ruby"
+    "sqlite"
+    "starship"
+    "teleport"
+    "telnet"
+    "terraform"
+    "tflint"
+    "tfsec"
+    "the_silver_searcher"
+    "tmate"
+    "tmux"
+    "tree"
+    "unibilium"
+    "unixodbc"
+    "utf8proc"
+    "wget"
+    "wxmac"
+    "xz"
+    "yadm"
+    "yarn"
+    "zsh"
+    "bash-completion"
+)
+
+for package in "${brew_packages[@]}"
+do
+    if brew ls --versions $package; then
+        echo "Installed, $package ..."
+        # brew upgrade $package
+    else
+        echo "Installing $package ..."
+        brew install $package
+    fi
+done
+
+# Cask
+cask_packages=(
+    iterm2
+    alfred
+)
+
+for package in "${cask_packages[@]}"
+do
+    brew cask ls --versions $package
+    if [[ $? != 0 ]] ; then
+        echo "install"
+        brew cask install $package
+    fi
+done
+
+# Remove outdated versions from the cellar.
+brew cleanup
+
+
+
